@@ -1,0 +1,67 @@
+﻿<Page x:Class="SSI.GeoVision.Wizard.Pages.DevicesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="400"
+	Title="DevicesPage">
+
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="White">
+            <Path Data="M0,14.827L29.289,14.827 29.289,35.799 0,35.799z M22.781477,0L50.984425,0C58.17181,0,64,5.8281641,64,13.016976L64,37.969025C64,45.157867,58.17181,50.986,50.984425,50.986L22.781477,50.986C16.979187,50.986,12.067797,47.186478,10.388,41.945547L44.474037,41.945547C50.466125,41.945547,55.322918,37.08882,55.322918,31.097883L55.322918,18.804811C55.322918,12.813875,50.466125,7.9583869,44.474037,7.9583874L10.783899,7.9583874C12.760495,3.2825794,17.385487,0,22.781477,0z"
+                  Stretch="Uniform" Fill="Black" Width="48" Height="48" Margin="10,4,0,4"  HorizontalAlignment="Left" />
+
+            <Image Margin="4" HorizontalAlignment="Right" Source="/Resources/logo.png" Width="64" />
+            <TextBlock Margin="80,0,0,0" VerticalAlignment="Center" >
+                <Span FontSize="18"><Bold>Device selection</Bold></Span>
+                <LineBreak/>
+                <Span FontSize="14">Select devices you wish to import</Span>
+            </TextBlock>
+        </Grid>
+
+        <Grid Margin="10" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding Path=Devices.Count, StringFormat='\{0\} device(s) found.'}" HorizontalAlignment="Right" />
+
+            <ListView Grid.Row="2" ItemsSource="{Binding Path=Devices}" IsSynchronizedWithCurrentItem="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.Header>
+                                <CheckBox IsChecked="{Binding Path=AreAllSelected}"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Path=IsSelected}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="VarName" DisplayMemberBinding="{Binding Path=VarName}" Width="120" />
+                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"  Width="160"/>
+                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}" Width="60" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ProgressBar Grid.Row="3" Height="15" IsIndeterminate="True" x:Name="progressBar" />
+        </Grid>
+
+        <WrapPanel  Grid.Row="2" FlowDirection="RightToLeft" VerticalAlignment="Bottom">
+            <Button Height="23" Width="75" Margin="20,10,10,10" Content="Next" IsDefault="True" Command="{Binding Path=SummaryCommand}" />
+            <Button Height="23" Width="75" Margin="10" Content="Previous" IsCancel="True" Command="{Binding Path=LoginDeviceCommand}" CommandParameter="notchecklogin" />
+        </WrapPanel>
+    </Grid>
+</Page>
